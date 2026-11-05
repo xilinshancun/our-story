@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#fbf6ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1d1a17" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="我们">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<title>我们</title>
+<style>
+  :root {
+    --bg: #fbf6ef;
+    --card: #ffffff;
+    --text: #3a322c;
+    --muted: #8c8178;
+    --line: #efe6da;
+    --accent: #c9725a;
+    --soft: #f6ebe1;
+    --shadow: 0 6px 24px rgba(80, 50, 30, .08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1d1a17;
+      --card: #27231f;
+      --text: #efe7dd;
+      --muted: #a69b90;
+      --line: #3a342e;
+      --accent: #e3907a;
+      --soft: #332d27;
+      --shadow: none;
+    }
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    font-size: 16px; line-height: 1.75;
+  }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  [hidden] { display: none !important; }
+  .wrap { max-width: 480px; margin: 0 auto; padding: calc(32px + env(safe-area-inset-top)) 18px calc(48px + env(safe-area-inset-bottom)); }
+
+  /* 解锁页 */
+  .lock { min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+  .lock form { width: 100%; max-width: 340px; text-align: center; }
+  .lock .heart { font-size: 44px; color: var(--accent); line-height: 1; }
+  .lock h1 { font-size: 24px; margin: 14px 0 4px; }
+  .lock p { margin: 0 0 22px; color: var(--muted); font-size: 14px; }
+  .lock input[type=password] {
+    width: 100%; height: 50px; padding: 0 16px; border-radius: 14px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text);
+    font-size: 17px; text-align: center; outline: none;
+  }
+  .lock input[type=password]:focus { border-color: var(--accent); }
+  .lock label { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 14px 0; font-size: 14px; color: var(--muted); }
+  .lock .go { width: 100%; height: 50px; border: none; border-radius: 14px; background: var(--accent); color: #fff; font-size: 16px; font-weight: 600; }
+  .lock .go:disabled { opacity: .6; }
+  .lock .err { min-height: 22px; margin-top: 12px; font-size: 14px; color: var(--accent); }
+  .shake { animation: shake .35s; }
+  @keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+
+  /* 首页 */
+  .hero { text-align: center; padding: 20px 0 4px; }
+  .hero .names { font-size: 15px; color: var(--muted); letter-spacing: .1em; }
+  .hero .names b { color: var(--accent); font-weight: 400; margin: 0 8px; display: inline-block; animation: beat 2.4s ease-in-out infinite; }
+  @keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.25); } 30% { transform: scale(1); } }
+  .hero h1 { font-size: 28px; margin: 10px 0 18px; line-height: 1.4; }
+  .counters { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+  .counter { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 14px 12px; box-shadow: var(--shadow); }
+  .counter .n { font-size: 30px; font-weight: 700; color: var(--accent); line-height: 1.25; font-variant-numeric: tabular-nums; }
+  .counter .n small { font-size: 14px; font-weight: 400; margin-left: 2px; }
+  .counter .s { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .counter .l { font-size: 13px; color: var(--muted); }
+  .poke {
+    margin-top: 16px; min-height: 46px; padding: 0 26px; border-radius: 999px;
+    border: 1px solid var(--accent); background: transparent; color: var(--accent); font-size: 15px;
+  }
+  .poke:active { transform: scale(.96); }
+
+  h2 { font-size: 19px; margin: 40px 0 14px; display: flex; align-items: baseline; gap: 8px; }
+  h2 span { font-size: 13px; font-weight: 400; color: var(--muted); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); }
+
+  .days { padding: 4px 16px; }
+  .day { display: flex; justify-content: space-between; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+  .day:last-child { border-bottom: none; }
+  .day .when { color: var(--muted); font-size: 14px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .day .when b { color: var(--accent); font-size: 17px; }
+
+  .timeline { position: relative; padding-left: 22px; }
+  .timeline::before { content: ""; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
+  .item { position: relative; margin-bottom: 18px; }
+  .item::before { content: ""; position: absolute; left: -21px; top: 18px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); }
+  .item .card { padding: 12px 16px 14px; }
+  .item .meta { font-size: 13px; color: var(--muted); }
+  .item h3 { margin: 2px 0 4px; font-size: 17px; }
+  .item p { margin: 0; white-space: pre-line; }
+  .photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 10px; }
+  .photos.one { grid-template-columns: 1fr; }
+  .photos.two { grid-template-columns: 1fr 1fr; }
+  .ph { aspect-ratio: 1; border-radius: 10px; background: var(--soft); overflow: hidden; border: none; padding: 0; }
+  .photos.one .ph { aspect-ratio: auto; max-height: 460px; }
+  .ph img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .3s; }
+  .ph img.ok { opacity: 1; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 15px; }
+  .chip span { color: var(--muted); font-size: 12px; margin-left: 6px; }
+
+  .wishes { padding: 4px 16px; }
+  .wish { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .wish:last-child { border-bottom: none; }
+  .wish .dot { flex: none; width: 20px; height: 20px; margin-top: 4px; border-radius: 50%; border: 2px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 12px; color: #fff; }
+  .wish.done .dot { background: var(--accent); border-color: var(--accent); }
+  .wish.done .t { color: var(--muted); text-decoration: line-through; }
+
+  footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 40px; }
+  footer button { border: none; background: none; color: var(--muted); font-size: 12px; text-decoration: underline; margin-top: 6px; padding: 8px; }
+
+  /* 看大图 */
+  .viewer { position: fixed; inset: 0; z-index: 20; background: rgba(0, 0, 0, .92); display: flex; align-items: center; justify-content: center; }
+  .viewer img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .viewer .hint { position: absolute; bottom: calc(18px + env(safe-area-inset-bottom)); left: 0; right: 0; text-align: center; color: rgba(255, 255, 255, .6); font-size: 13px; }
+
+  .toast {
+    position: fixed; left: 50%; bottom: calc(28px + env(safe-area-inset-bottom)); z-index: 30;
+    transform: translate(-50%, 20px); opacity: 0; transition: all .25s;
+    background: var(--text); color: var(--bg); padding: 10px 18px; border-radius: 999px; font-size: 14px; pointer-events: none; white-space: nowrap;
+  }
+  .toast.show { transform: translate(-50%, 0); opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<main class="lock" id="lock">
+  <form id="lockForm" autocomplete="on">
+    <div class="heart" aria-hidden="true">♥</div>
+    <h1>我们</h1>
+    <p>输入密码进来看看</p>
+    <input type="text" name="username" value="us" autocomplete="username" hidden>
+    <input type="password" id="pw" autocomplete="current-password" aria-label="密码" placeholder="密码" required>
+    <label><input type="checkbox" id="remember" checked> 在这台手机上记住我</label>
+    <button class="go" id="go" type="submit">进入</button>
+    <div class="err" id="err" role="alert"></div>
+  </form>
+</main>
+
+<div class="wrap" id="app" hidden>
+  <section class="hero">
+    <div class="names" id="names"></div>
+    <h1 id="tagline"></h1>
+    <div class="counters" id="counters"></div>
+    <button class="poke" id="poke" hidden></button>
+  </section>
+
+  <section id="daysSec" hidden>
+    <h2>重要的日子</h2>
+    <div class="card days" id="days"></div>
+  </section>
+
+  <section id="timelineSec">
+    <h2>我们的时间线</h2>
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <section id="placesSec" hidden>
+    <h2>一起去过的地方 <span id="placesCount"></span></h2>
+    <div class="chips" id="places"></div>
+  </section>
+
+  <section id="wishesSec" hidden>
+    <h2>想一起做的事 <span id="wishesCount"></span></h2>
+    <div class="card wishes" id="wishes"></div>
+  </section>
+
+  <footer>
+    未完待续
+    <br><button id="logout" type="button">在这台手机上退出</button>
+  </footer>
+</div>
+
+<div class="viewer" id="viewer" hidden><img id="viewerImg" alt=""><div class="hint">点一下关闭</div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

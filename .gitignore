@@ -1,0 +1,6 @@
+# 明文内容只留在本地，发布的只有加密后的 content.enc 和 p/
+data.js
+photos/
+.password
+素材清单.md
+.DS_Store
